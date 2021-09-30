@@ -60,8 +60,8 @@ def create_app():
 
     # Add handler for handling message, there are many kinds of message. For this handler, it particular handle text
     # message.
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, reply_handler))
     dispatcher.add_handler(CommandHandler("start", start_handler))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, reply_handler))
 
     #
     # Set up Flask extensions
