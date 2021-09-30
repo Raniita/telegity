@@ -17,7 +17,7 @@ steps:
 - name: run
   commands:
     - cd /var/docker/telegity
-    - docker-compose stop telegity
+    #- docker-compose stop telegity
     - docker-compose up -d telegity
   when:
   branch:
