@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+
+  telegity:
+    image: telegity
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_TOKEN=<TOKEN_HERE>
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.telegity.entryPoints=web-secure
+      - traefik.http.routers.telegity.rule=Host(`telegity.ranii.pro`)
+      # Other containers should always take priority over this one
+      - traefik.http.routers.telegity.priority=1
+      

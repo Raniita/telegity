@@ -1,11 +1,12 @@
 import logging
-
+import telegram
+from telegram.ext import Dispatcher, MessageHandler, Filters
 from flask import Flask
 
 from app.config import ProductionConfig, DevelopmentConfig, TestingConfig
+from app.utils.bot_handlers import reply_handler
 
 # Extensions declaration
-
 
 # Application factory init
 def create_app():
@@ -45,6 +46,21 @@ def create_app():
 
         app.logger.info('Starting with DevelopmentConfig')
         app.config.from_object(DevelopmentConfig)
+
+    #
+    # Set up Telegram Bot
+    #
+    # Initial bot by Telegram access token
+    global bot
+    bot = telegram.Bot(token=app.config['TELEGRAM_TOKEN'])
+
+    # New a dispatcher for bot
+    global dispatcher
+    dispatcher = Dispatcher(bot, None)
+
+    # Add handler for handling message, there are many kinds of message. For this handler, it particular handle text
+    # message.
+    dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
 
     #
     # Set up Flask extensions
