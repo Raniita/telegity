@@ -1,6 +1,6 @@
 import logging
 import telegram
-from telegram.ext import Dispatcher, MessageHandler, Filters
+from telegram.ext import Dispatcher, MessageHandler, CommandHandler, Filters
 from flask import Flask
 
 from app.config import ProductionConfig, DevelopmentConfig, TestingConfig
@@ -61,6 +61,7 @@ def create_app():
     # Add handler for handling message, there are many kinds of message. For this handler, it particular handle text
     # message.
     dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
+    dispatcher.add_handler(CommandHandler("start", start))
 
     #
     # Set up Flask extensions
