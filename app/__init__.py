@@ -2,6 +2,7 @@ import logging
 import telegram
 from telegram.ext import Dispatcher, MessageHandler, CommandHandler, Filters
 from flask import Flask
+from flask_swagger_ui import get_swaggerui_blueprint
 
 from app.config import ProductionConfig, DevelopmentConfig, TestingConfig
 from app.utils.bot_handlers import reply_handler, start_handler
@@ -67,6 +68,16 @@ def create_app():
     # Set up Flask extensions
     #
 
+    # Init Swagger UI
+    SWAGGER_URL = '/api/docs'       # URL for exposing Swagger UI (without trailing '/')
+    API_URL = '/api/swagger_json'   # Our API url (can of course be a local resource)
+
+    # Call factory function to create our blueprint
+    swaggerui_blueprint = get_swaggerui_blueprint(
+        SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+        API_URL
+    )
+
     app.logger.info('Done. Flask extensions started.')
 
     # Adding the views app
@@ -75,5 +86,6 @@ def create_app():
 
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(api_bp)
+    app.register_blueprint(swaggerui_blueprint)
 
     return app
