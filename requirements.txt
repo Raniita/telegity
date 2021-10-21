@@ -1,5 +1,11 @@
 flask
 flask-swagger
 flask-swagger-ui
+flask-login
+flask-wtf
+flask-sqlalchemy
+flask-migrate
+flask-debugtoolbar
 python-telegram-bot
 requests
+email_validator
